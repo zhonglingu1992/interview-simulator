@@ -1,65 +1,91 @@
-import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HeroCTA } from "@/components/hero-cta";
+
+const features = [
+  {
+    title: "AI-Powered Questions",
+    description:
+      "Get realistic interview questions tailored to your industry, experience level, and target role. Choose from behavioral, case, and situational formats.",
+  },
+  {
+    title: "Personalized Feedback",
+    description:
+      "Receive detailed analysis of your answers highlighting strengths and specific areas for improvement with actionable suggestions.",
+  },
+  {
+    title: "STAR Framework Analysis",
+    description:
+      "For behavioral questions, get a breakdown of your response across Situation, Task, Action, and Result with individual scores.",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="space-y-16">
+      {/* Hero */}
+      <section className="text-center space-y-6 pt-12">
+        <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
+          Master Your
+          <br />
+          <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">
+            Behavioral Interviews
+          </span>
+        </h1>
+        <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          Practice with AI-generated interview questions personalized to your
+          background. Get instant, detailed feedback on your answers — including
+          STAR framework evaluation for behavioral questions.
+        </p>
+        <HeroCTA />
+      </section>
+
+      {/* Features */}
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {features.map((feature) => (
+          <Card key={feature.title} className="text-center">
+            <CardHeader>
+              <CardTitle className="text-lg">{feature.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {feature.description}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+      </section>
+
+      {/* How it works */}
+      <section className="text-center space-y-6">
+        <h2 className="text-2xl font-bold">How It Works</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+          {[
+            {
+              step: "1",
+              title: "Set Up Your Profile",
+              desc: "Tell us about your industry, experience, and goals.",
+            },
+            {
+              step: "2",
+              title: "Practice Questions",
+              desc: "Generate questions by type, difficulty, or job description.",
+            },
+            {
+              step: "3",
+              title: "Get AI Feedback",
+              desc: "Submit your answer and receive detailed analysis.",
+            },
+          ].map((item) => (
+            <div key={item.step} className="space-y-2">
+              <div className="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold mx-auto">
+                {item.step}
+              </div>
+              <h3 className="font-semibold">{item.title}</h3>
+              <p className="text-sm text-muted-foreground">{item.desc}</p>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
     </div>
   );
 }
