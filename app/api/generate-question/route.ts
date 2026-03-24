@@ -3,7 +3,8 @@ import { buildQuestionPrompt } from "@/lib/prompts";
 import { GenerateQuestionRequest } from "@/lib/types";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new Anthropic();
+const apiKey = process.env.ANTHROPIC_API_KEY;
+const client = apiKey ? new Anthropic({ apiKey }) : null;
 
 function extractJSON(text: string): string {
   const stripped = text.replace(/```(?:json)?\s*/g, "").replace(/```/g, "");
@@ -17,6 +18,13 @@ function extractJSON(text: string): string {
 
 export async function POST(req: NextRequest) {
   try {
+    if (!client) {
+      return NextResponse.json(
+        { error: "ANTHROPIC_API_KEY is not configured. Please set it in your .env.local file or Vercel environment variables." },
+        { status: 500 }
+      );
+    }
+
     const body: GenerateQuestionRequest = await req.json();
 
     if (!body.profile?.industry || !body.profile?.experienceLevel) {
@@ -29,7 +37,7 @@ export async function POST(req: NextRequest) {
     const { system, user } = buildQuestionPrompt(body);
 
     const message = await client.messages.create({
-      model: "claude-sonnet-4-20250514",
+      model: "claude-sonnet-4-5",
       max_tokens: 1024,
       system,
       messages: [{ role: "user", content: user }],
